@@ -519,7 +519,6 @@ kbd{background:rgba(var(--shine),.1);border:1px solid var(--border);border-radiu
  let isSpinning = false;
  let audioCtx = null;
 
- /* ---------------- SECURITY: escape any string injected via innerHTML ---------------- */
  function escapeHtml(str) {
  if (str === null || str === undefined) return'';
  return String(str)
@@ -531,7 +530,6 @@ kbd{background:rgba(var(--shine),.1);border:1px solid var(--border);border-radiu
  }
  window.escapeHtml = escapeHtml;
 
- /* ---------------- TOASTS (replaces alert()) ---------------- */
  function showToast(msg, type ='info', icon = null) {
  const host = document.getElementById('toastHost');
  if (!host) return;
@@ -550,7 +548,6 @@ kbd{background:rgba(var(--shine),.1);border:1px solid var(--border);border-radiu
  }
  window.showToast = showToast;
 
- /* ---------------- CONFIRM MODAL (replaces confirm()) ---------------- */
  function showConfirm(text, title) {
  return new Promise((resolve) =>{
  const modal = document.getElementById('confirmModal');
@@ -572,7 +569,6 @@ kbd{background:rgba(var(--shine),.1);border:1px solid var(--border);border-radiu
  });
  }
 
- /* ---------------- MOBILE NAV ---------------- */
  function openMobileNav() {
  document.getElementById('sidebarNav').classList.add('open');
  document.getElementById('sidebarScrim').classList.add('show');
@@ -737,11 +733,6 @@ kbd{background:rgba(var(--shine),.1);border:1px solid var(--border);border-radiu
  const PH = "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="96" height="54"><rect width="96" height="54" rx="10" fill="#3a2d57"/><path d="M48 36s-9-5.5-9-11.6A5.2 5.2 0 0 1 48 21a5.2 5.2 0 0 1 9 3.4C57 30.5 48 36 48 36Z" fill="#ff7ab8"/></svg>');
  window.PH = PH;
 
- /* ---------------- CARICAMENTO + AGGIORNAMENTO LIVE DEI DATI ----------------
-    Ogni pochi secondi (solo se la scheda e' visibile) il sito riscarica levels.json e
-    players.json saltando la cache del browser. Se il contenuto e' cambiato,
-    ridisegna lista/classifiche al volo: niente F5, e non perde ricerca, scroll,
-    livello aperto e video in riproduzione. */
  const POLL_MS = 3000;
  const lastRaw = { levels: null, players: null };
  let usingDemo = false, isLoading = false, pollTimer = null;
@@ -752,7 +743,6 @@ kbd{background:rgba(var(--shine),.1);border:1px solid var(--border);border-radiu
    return r.text();
  }
 
- // ritorna 'changed' | 'same' | 'error'
  async function loadData(first) {
    if (isLoading) return 'same';
    isLoading = true;
@@ -1116,10 +1106,6 @@ ${sub ? `<span class="lvl-sub">${sub}</span>` : ''}
  if(selectedRouletteLvl) { showDetails(selectedRouletteLvl); showPage('list', document.querySelectorAll('.nav-icon')[0]); }
  }
 
- /* ===== IMPOSTAZIONI DEL SITO (le modifichi tu, owner) =====
-    level: nome ESATTO del livello come scritto nella lista (le maiuscole non contano)
-    date:  data della verifica, formato AAAA-MM-GG (lascia "" per non mostrarla)
-    note:  frase breve opzionale sotto il titolo (lascia "" per nasconderla) */
  const SITE_CONFIG = {
  latestVerified: { level: "Avernus", date: "", note: "" }
  };
@@ -1152,10 +1138,6 @@ ${when ? `<div><small>${d.latestDate}</small><strong>${escapeHtml(when)}</strong
  }
  window.renderLatest = renderLatest;
 
- // Punti-base per rank in stile Pointercrate/Demon List: il Top 1 vale il massimo,
- // il punteggio decresce progressivamente. Un 100% su un livello difficile deve valere
- // molto di piu di un 100% su un livello facile: sommare semplicemente il"percent"
- // grezzo (come faceva la versione precedente) rendeva la classifica priva di senso.
  function pointsForRank(rank) {
  const BASE = 500;
  const MIN = 5;
@@ -1368,8 +1350,6 @@ ${when ? `<div><small>${d.latestDate}</small><strong>${escapeHtml(when)}</strong
  }
  window.triggerConfetti = triggerConfetti;
 
-
- // Keyboard shortcuts: Escape closes modals/mobile nav
  document.addEventListener('keydown', (e) =>{
  if (e.key ==='Escape') {
  document.getElementById('rouletteModal')?.classList.remove('active');
